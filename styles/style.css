@@ -1,0 +1,191 @@
+/* Reset any unwanted margins/padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main container */
+.App {
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Cards grid layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  gap: 15px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Card container - MUST include perspective */
+.card {
+  width: 100px;
+  height: 100px;
+  perspective: 1000px; /* Crucial for 3D effect */
+}
+
+/* Inner card - handles the flip */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+/* Flipped state */
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Front and back faces - MUST be absolutely positioned */
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden; /* Hide the opposite side */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+/* Front face (initially hidden) */
+.front {
+  background: white;
+  color: #333;
+  font-size: 2.5rem;
+  transform: rotateY(180deg); /* Start flipped */
+  border: 2px solid #eee;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Back face (initially visible) */
+.back {
+  background: #4a6fa5;
+  transform: rotateY(0deg); /* Start visible */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Game controls */
+button {
+  padding: 10px 20px;
+  background: #4caf50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 10px;
+}
+
+/* Score display */
+.score {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+/* Win message */
+.win-message {
+  margin: 20px auto;
+  padding: 15px;
+  background: #dfffd8;
+  border: 1px solid #4caf50;
+  border-radius: 5px;
+  max-width: 300px;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+ 
+ /* // .App {
+  //   text-align: center;
+  //   padding: 20px;
+  // }
+  // .cards-grid {
+  //   display: grid;
+  //   grid-template-columns: repeat(4, 100px);
+  //   gap: 10px;
+  //   justify-content: center;
+  // } */
+
+  /* .card {
+  //   width: 100px;
+  //   height: 100px;
+  //   perspective: 1000px;
+  //   cursor: pointer;
+  // }
+  
+  // .card-inner {
+  //   width: 100%;
+  //   height: 100%;
+  //   position: relative;
+  //   transform-style: preserve-3d;
+  //   transition: transform 0.6s;
+  // }
+  
+  // .card-inner.flipped {
+  //   transform: rotateY(180deg);
+  // }
+  
+  // .front, .back {
+  //   width: 100%;
+  //   height: 100%;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   backface-visibility: hidden;
+  //   border-radius: 10px;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   font-size: 2rem;
+  // }
+  
+  // .front {
+  //   transform: rotateY(180deg);
+  //   background-color: white;
+  //   box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+  // }
+  
+  // .back {
+  //   background-color: #444;
+  //   transform: rotateY(0);
+  // }   */
+
+  /* // button {
+  //   padding: 10px 20px;
+  //   background-color: #4caf50;
+  //   cursor: pointer;
+  //   margin-bottom: 20px;
+  // }
+
+  // .score {
+  //   margin: 20px;
+  //   font-size: 22px;
+  // }
+  // .win-message {
+  //   margin-top: 1rem;
+  //   padding: 1rem;
+  //   background-color: #dfffd8;
+  //   border: 2px solid #4caf50;
+  //   border-radius: 8px;
+  //   font-size: 1.2rem;
+  //   text-align: center;
+  //   animation: fadeIn 0.5s ease-in-out;
+  // }
+  
+  // @keyframes fadeIn {
+  //   from { opacity: 0; transform: scale(0.95); }
+  //   to { opacity: 1; transform: scale(1); }
+  // }
+   */
