@@ -35,7 +35,7 @@ function App() {
     });
 
     const shuffleCards = () => {
-        const shuffled = symbols.map(card => ({ ...card, id: Math.random() })).sort(() => Math.random() - 0.5);
+        const shuffled = symbols.map(card => ({ ...card, id: Math.random() })).sort(() => Math.random() - 1.5);
         setChoiceOne(null);
         setChoiceTwo(null);
         setCards(shuffled);
@@ -52,18 +52,22 @@ function App() {
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
-      setMoves((moves) => moves + 1);
-      setDisabled(true);
-      if (choiceOne.symbolId === choiceTwo.symbolId) {
-        const updatedCards = cards.map(card =>
-        card.symbolId === choiceOne.symbolId ? { ...card, matched: true } : card
-        );
-        setCards(updatedCards);
-        checkCompletion(updatedCards);
-        resetTurn();
-      } else {
-        setTimeout(() => resetTurn(), 500);
-      }
+      setMoves((prevMoves) => {
+        const newMoves = prevMoves + 1;
+        setDisabled(true);
+      
+        if (choiceOne.symbolId === choiceTwo.symbolId) {
+          const updatedCards = cards.map(card =>
+            card.symbolId === choiceOne.symbolId ? { ...card, matched: true } : card
+          );
+          setCards(updatedCards);
+          checkCompletion(updatedCards, newMoves);
+          resetTurn();
+        } else {
+          setTimeout(() => resetTurn(), 500);
+        }
+        return newMoves;
+      });
     }
   }, [choiceOne, choiceTwo]);
 
@@ -73,15 +77,15 @@ function App() {
     setDisabled(false);
   };
 
-    const checkCompletion = (updatedCards) => {
-      const allEqual =  updatedCards.every(val => val.matched === true);
-      if (allEqual) {
-        setGameWon(true);
-        const highScore = Math.min(moves, bestScore);
-        setBestScore(highScore);
-        localStorage.setItem("bestScore", highScore);
-      }
-    };
+  const checkCompletion = (updatedCards, currentMoves) => {
+    const allEqual = updatedCards.every(val => val.matched === true);
+    if (allEqual) {
+      setGameWon(true);
+      const highScore = Math.min(currentMoves, bestScore);
+      setBestScore(highScore);
+      localStorage.setItem("bestScore", highScore);
+    }
+  };
 
     useEffect(() => {
         shuffleCards();
